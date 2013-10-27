@@ -1,0 +1,805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0047)http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>
+    Tema 3 - Inverted Index    [CS Open CourseWare]
+  </title>
+
+  <meta name="generator" content="DokuWiki">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2013-05-03T23:08:53+0300">
+<meta name="keywords" content="sd-ca,teme,teme-03">
+<link rel="search" type="application/opensearchdescription+xml" href="http://ocw.cs.pub.ro/courses/lib/exe/opensearch.php" title="CS Open CourseWare">
+<link rel="start" href="http://ocw.cs.pub.ro/courses/">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://ocw.cs.pub.ro/courses/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://ocw.cs.pub.ro/courses/feed.php?mode=list&ns=sd-ca:teme">
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://ocw.cs.pub.ro/courses/_export/xhtml/sd-ca/teme/teme-03">
+<link rel="canonical" href="./Tema 3 - Inverted Index [CS Open CourseWare]_files/Tema 3 - Inverted Index [CS Open CourseWare].html">
+<link rel="stylesheet" type="text/css" href="./Tema 3 - Inverted Index [CS Open CourseWare]_files/css.php">
+<script type="text/javascript">/*<![CDATA[*/var NS='sd-ca:teme';var JSINFO = {"id":"sd-ca:teme:teme-03","namespace":"sd-ca:teme","isadmin":0,"isauth":0};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/js.php"></script>
+<script type="text/javascript">/*<![CDATA[*/
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		  
+/*!]]>*/</script><script src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">/*<![CDATA[*/
+var pageTracker = _gat._getTracker("UA-38383934-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+		  
+/*!]]>*/</script>
+<script type="text/x-mathjax-config;executed=true">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/MathJax.js"></script>
+
+  <link rel="shortcut icon" href="http://ocw.cs.pub.ro/courses/lib/tpl/arctic/images/favicon.ico">
+
+  
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+<div id="wrapper" class="show">
+  <div class="dokuwiki">
+
+    
+    <div class="stylehead">
+      <div class="header">
+        <div class="pagename">
+          <a href="http://ocw.cs.pub.ro/courses/sd-ca/"><img height="70" src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/sigla_cs.png"> </a>        </div>
+        <div class="logo">
+          <a style="color: #AAA !important;" href="http://ocw.cs.pub.ro/courses/">Open CourseWare</a>        </div>
+      </div>
+    
+       
+      <div class="breadcrumbs">
+              </div>
+      
+            </div>
+
+                  <div class="bar" id="bar__top">
+        <div class="bar-left">
+                  </div>
+        <div class="bar-right">
+          <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03?do=login&sectok=9c6a3c70746e5697e496d5d6f13170f0" class="action login" rel="nofollow" title="Login">Login</a>        </div>
+    </div>
+        
+    
+    
+    
+              <div class="left_page">
+          
+<h1 class="sectionedit1" id="tema_3_-_inverted_index">Tema 3 - Inverted Index</h1>
+<div class="level1">
+
+<p>
+Responsabili:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="mailto:mailto:octavian.rinciog@gmail.com" class="mail" title="mailto:octavian.rinciog@gmail.com"> Octavian Rinciog</a> (2013)</div>
+</li>
+<li class="level1"><div class="li"> <a href="mailto:mailto:eliana.tirsa@cs.pub.ro" class="mail" title="mailto:eliana.tirsa@cs.pub.ro">Eliana Tirsa</a> (2013)</div>
+</li>
+</ul>
+
+<p>
+<strong>Deadline:</strong> joi 09 Mai 2013, ora 23:55
+</p>
+
+<p>
+<strong>Changelist:</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>24 Aprilie 2013</strong> Modificări în modalitatea de afișat a outputului și publicat testele.</div>
+</li>
+<li class="level1"><div class="li"> <strong>2 Mai 2013</strong> Rectificare output exemplu 2</div>
+</li>
+</ul>
+
+</div>
+
+<h1 class="sectionedit2" id="introducere">Introducere</h1>
+<div class="level1">
+
+<p>
+Fiind foarte dornic de a căuta și studia noutățile legate de domeniul IT, studentul eminent Gigel folosește motorul de căutare Google pentru a afla aceste informații. Într-o noapte a realizat ca el nu știe absolut nimic despre modul în care funcționează principala lui unealta de investigare – Google. 
+</p>
+
+<p>
+Timp de câteva zile a căutat cum funcționează acest motor de căutare, dar știind ca întotdeauna teoria pare mult mai ușoară decât implementarea propriu-zisă și fiind pasionat de hashtable-uri a decis să implementeze o funcționalitate de bază a motoarelor de căutare, și anume partea de căutare a termenilor.  
+</p>
+
+<p>
+Din păcate, Gigel s-a încurcat destul de tare la implementare și a hotărât ca să lase implementarea acestei funcționalități pe seama unor studenți mai eminenți decât el. 
+</p>
+
+</div>
+
+<h1 class="sectionedit3" id="cerinte">Cerințe</h1>
+<div class="level1">
+
+<p>
+Dându-se ca input o serie de site-uri și conținutul acestora, se cere să se găsească site-urile care conțin cuvintele date ca interogare sau dacă un site conține o înlănțuire de termeni. 
+</p>
+
+</div>
+
+<h2 class="sectionedit4" id="detalii_de_implementare">Detalii de implementare</h2>
+<div class="level2">
+
+</div>
+
+<h3 class="sectionedit5" id="input">Input</h3>
+<div class="level3">
+
+<p>
+Input-ul constă din 3 tipuri de comenzi pe care le veți citi de la tastatură, până cănd veți întălni caracterul <abbr title="End of file">EOF</abbr>. 
+Cele 3 comenzi sunt:
+</p>
+<ul>
+<li class="level1"><div class="li"> „PUT”</div>
+</li>
+<li class="level1"><div class="li"> „GET” </div>
+</li>
+<li class="level1"><div class="li"> „SITE”</div>
+</li>
+</ul>
+
+<p>
+În secțiunile următoare ale enunțului, se vor găsi explicații despre fiecare astfel de comandă. 
+</p>
+
+</div>
+
+<h4 id="comanda_put">Comanda PUT</h4>
+<div class="level4">
+
+<p>
+Sintaxa comenzii PUT este:
+</p>
+<pre class="code">      PUT site conținut_site </pre>
+
+<p>
+Rolul acestei comenzi este a reține tot conținutul site-ulului primit ca parametru în comandă, astfel încât la orice căutari de termeni care se află în conținut, site-ul respectiv să fie găsit.  
+</p>
+
+<p>
+În mica lui cercetare despre cum funcționează un motor de căutare, Gigel a regăsit două tehnici de reținere a acestei comenzi :
+</p>
+<ul>
+<li class="level1"><div class="li"> Într-un hashtable, se rețin asocieri de tipul <strong>site - lista de cuvinte.</strong> Astfel cheia intrării în hashtable este <em>site-ul</em> și valoarea <em>lista de cuvinte </em>. Așa cum a descoperit și Gigel, există o seria de avantaje și dezavantaje: </div>
+<ul>
+<li class="level2"><div class="li"> operația de PUT este mult ușurată, întrucât nu se fac deloc prelucrări asupra conținutului, </div>
+</li>
+<li class="level2"><div class="li"> operația de GET în cadrul acestei structuri este mult îngreunată, întrucât se caută cuvinte și nu site-uri. </div>
+</li>
+<li class="level2"><div class="li"> (Remember: proprietatea de bază a unui hashtable este că operația de căutare se efectuează în O(1) complexitate)</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>„Inverted index”</strong>.  Tot într-un hashtable, se rețin asocieri de tipul <strong>cuvânt - lista de site-uri</strong>. Astfel cheia intrării în hashtable este <em>cuvântul</em> și valoarea <em>lista de site-uri care conțin acel cuvânt</em>. În acest fel, căutarea unui cuvânt este efectuată mult mai ușor, întrucât hashtable-ul este indexat după cuvinte.  </div>
+</li>
+</ul>
+
+<p>
+În tema voastră, va trebui să implementați cea de-a doua tehnică de reținere a informațiilor, cea în care într-un hashtable se rețin asocieri de tipul <strong>cuvânt - listă de site-uri</strong>. 
+Astfel dacă se dau la input următoarele două comenzi:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>PUT <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a> yahoo america</strong></div>
+</li>
+<li class="level1"><div class="li"> <strong>PUT <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a> google america</strong></div>
+</li>
+</ul>
+
+<p>
+Hashtable-ul după aceste două comenzi va arăta în felul următor:
+</p>
+<ul>
+<li class="level1"><div class="li"> yahoo → <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a></div>
+</li>
+<li class="level1"><div class="li"> google → <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a></div>
+</li>
+<li class="level1"><div class="li"> america → <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a> <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a> </div>
+</li>
+</ul>
+
+<p>
+Observații comandă PUT:
+</p>
+<ul>
+<li class="level1"><div class="li"> Două comenzi PUT pentru același site se consideră adăugări de conținut și nu ștergere sau înlocuire de conținut. </div>
+</li>
+<li class="level2"><div class="li"> Un cuvânt poate apărea de mai multe ori în cadrul site-ului. </div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="comanda_get">Comanda GET</h4>
+<div class="level4">
+
+<p>
+Sintaxa comenzii GET este:
+</p>
+<pre class="code">    GET interogare</pre>
+
+<p>
+Această comandă va întoarce toate site-urile în care apar toți termenii interogării. De exemplu, pentru următoarele interogări:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>GET america </strong> </div>
+<ul>
+<li class="level3"><div class="li"> Rezultatul va fi <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a> <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a></div>
+</li>
+<li class="level3"><div class="li"> Cuvântul „america” apare atât în site-ul <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a> cât și în <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a></div>
+</li>
+<li class="level3"><div class="li"> Cele două situri afișate sunt în ordine alfabetică.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>GET america  google</strong></div>
+<ul>
+<li class="level3"><div class="li"> Rezultatul va fi  <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>GET romania</strong></div>
+<ul>
+<li class="level3"><div class="li"> Rezultatul va fi SITE_NOT_FOUND (Nu există nici un site indexat care să conțină cuvântul romania)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Observații comandă GET:
+</p>
+<ul>
+<li class="level1"><div class="li"> <del>Ordinea site-urilor nu contează.</del> <strong>Site-urile vor fi afișate în ordine alfabetică</strong></div>
+</li>
+<li class="level1"><div class="li"> Dacă nu există nici un site care să conțină toți termenii interogării, atunci se va afișa <del>„SITE NOT FOUND”</del>. SITE_NOT_FOUND</div>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="noteimportant">Intrucât va trebui să afisați toate site-urile care conțin toți termenii interogării, va trebui să găsiți o metodă de intersecție rapidă a site-urilor care conțin cel puțin un termen, întrucât Gigel nu a găsit răspuns la această întrebare.
+</div><p></p>
+<p></p>
+
+</div>
+
+<h4 id="comanda_site">Comanda SITE</h4>
+<div class="level4">
+
+<p>
+Sintaxa comenzii SITE este: 
+</p>
+<pre class="code">   SITE site interogare 
+   </pre>
+
+<p>
+Această comandă verifică dacă toți termenii din „interogare” există în site-ul „site”.  Dacă toți termenii există în site, atunci se va afișa <del>„WORD FOUND”</del>WORD_FOUND  , dacă nu atunci se va afișa <del>„WORD NOT FOUND”</del>WORD_NOT_FOUND.
+</p>
+
+<p>
+Exemplu:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>SITE <a href="http://www.yahoo.com/" class="urlextern" title="http://www.yahoo.com" rel="nofollow">www.yahoo.com</a> yahoo</strong></div>
+<ul>
+<li class="level2"><div class="li"> WORD_FOUND</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>SITE <a href="http://www.google.com/" class="urlextern" title="http://www.google.com" rel="nofollow">www.google.com</a> romania google</strong></div>
+<ul>
+<li class="level2"><div class="li"> WORD_NOT_FOUND</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h4 id="observatii_generale_input">Observații generale INPUT</h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> Despărțitorul între cuvintele din conținutul site-urilor sau din interogare este doar caracterul spațiu. </div>
+</li>
+<li class="level1"><div class="li"> Nu se vor găsi printre cuvinte alți desparțitori de cuvinte decât caracterul spațiu. </div>
+</li>
+<li class="level1"><div class="li"> Fiecare comandă se află pe o linie. </div>
+</li>
+<li class="level1"><div class="li"> Nu există un număr maxim de comenzi și nici nu există un număr maxim de caractere pe o linie. </div>
+</li>
+<li class="level1"><div class="li"> Se garantează ca în numele site-ului nu se vor gasi spații. </div>
+</li>
+<li class="level1"><div class="li"> Numele site-ului nu este obligatoriu sa înceapa cu www.</div>
+</li>
+<li class="level1"><div class="li"> Comanda se termina cu caracterul „\n”, care se garantează ca nu apare în conținutul site-urilor sau în interogări.</div>
+</li>
+<li class="level1"><div class="li"> Outputul comenzilor GET și SITE este influențat doar de comenzile PUT de până atunci. Așadar nu va trebui să rețineți comenzile date, ci doar să le procesați. </div>
+</li>
+</ul>
+
+</div>
+
+<h3 class="sectionedit6" id="hashtable">Hashtable</h3>
+<div class="level3">
+
+<p>
+Pentru implementarea eventualelor structuri de date de tip hashtable din temă, puteți pleca de la implementarea din <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-06" class="urlextern" title="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-06" rel="nofollow">Laboratorul 6</a>, bazată pe vectori de liste înlănțuite.
+Pentru a putea efectua tema, trebuie să  țineți cont de următoarele observații:
+</p>
+<ul>
+<li class="level1"><div class="li"> Operația de GET dintr-un hashtable trebuie să poată fii efectuată în timp constant și să nu fie influențată de numărul de intrări în hashtable. Din acest motiv, dacă implementați hashtable-ul ca un vector de liste, așa cum este sugerat în laboratorul de hash-uri, trebuie să tineți cont de raportul între câte intrări sunt în hashtable și capacitatea lui. </div>
+<ul>
+<li class="level3"><div class="li"> Dacă acest raport, numit <strong>factor de încărcare</strong>, depășeste o valoare predefinită (se recomandă ca această valoare să fie 0.7), atunci va trebui să redimensionați vectorul și bineînțeles va trebui să introduceți vechile intrări în noul vector. </div>
+</li>
+<li class="level3"><div class="li"> Pentru vectorul inițial din hashtable, puteți pleca cu o capacitate predefinită de intrări, de exemplu 10, urmând ca la fiecare redimensionare să dublați capacitatea vectorului. </div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Va trebui să găsiți o metodă prin care pentru un cuvânt să rețineți lista de site-uri asociate.</div>
+</li>
+<li class="level1"><div class="li"> Va trebui să gasiți o metodă prin care două liste de site-uri se intersectează foarte rapid.</div>
+</li>
+<li class="level1"><div class="li"> Întrucât se lucrează doar cu string-uri puteți folosi funcția de hash din laboratorul 6. </div>
+</li>
+</ul>
+
+<p>
+Următorul exemplu vă va ajuta să înțelegeți cum se redimensionează un hashtable: 
+</p>
+
+<p>
+Înainte: <a href="http://ocw.cs.pub.ro/courses/_detail/sd-ca/teme/hash1.jpg?id=sd-ca%3Ateme%3Ateme-03" class="media" title="sd-ca:teme:hash1.jpg"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/hash1.jpg" class="media" alt="" width="300"></a> După redimensionare: <a href="http://ocw.cs.pub.ro/courses/_detail/sd-ca/teme/hash2.jpg?id=sd-ca%3Ateme%3Ateme-03" class="media" title="sd-ca:teme:hash2.jpg"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/hash2.jpg" class="media" alt="" width="300"></a>
+</p>
+
+<p>
+Explicații:
+</p>
+<ul>
+<li class="level1"><div class="li"> Cele două poze indică același hashtable, odată înainte de redimensionare, având capacitatea de 10 și apoi după redimensionare, având capacitatea de 20.</div>
+</li>
+<li class="level1"><div class="li"> În cele două poze sunt arătate doar pozițiile din vector care conțin o listă nevidă de elemente. </div>
+</li>
+<li class="level1"><div class="li"> În poze, numele țărilor indică cheia din hashtable, iar valorile (listele de site-uri care conțin aceste cuvinte) nu au fost afișate</div>
+</li>
+<li class="level1"><div class="li"> Între paranteze, pentru fiecare țară este arătat valoarea hash-ului calculat cu funcția din laborator (<em>hash(“romania”)==1443285676</em>)</div>
+</li>
+<li class="level1"><div class="li"> Poziția din vector în care s-a inserat o cheie este indicele <strong>hash(cuvânt)%capacitate</strong></div>
+</li>
+<li class="level1"><div class="li"> În prima situație, în hashtable sunt deja 7 elemente (70% din capacitatea hashtable-ului este ocupată) și se inserează o nouă cheie (“romania”).</div>
+</li>
+<li class="level1"><div class="li"> În acest caz, întrucât factorul de încărcare depășeste 70%, trebuie ca hashtable-ul să fie redimensionat, iar cheile remapate la noii indecși. </div>
+</li>
+<li class="level1"><div class="li"> Astfel cheia “america” a fost mutată în elementul 15 din vector, întrucât <em>hash(“america”)%20==15</em> samd. </div>
+</li>
+<li class="level1"><div class="li"> Cheia “romania” a fost inserată pe poziția 16. </div>
+</li>
+</ul>
+
+</div>
+
+<h2 class="sectionedit7" id="schelet_de_cod">Schelet de Cod</h2>
+<div class="level2">
+
+<p>
+Pentru a vă ușura munca în ceea ce privește citirea și parsarea comenzilor, vă punem la dispoziție un schelet de cod, care realizează citirea și parsarea comenzilor de la tastatură.
+Scheletul de cod poate fi descărcat de la adresa: <a href="http://ocw.cs.pub.ro/courses/_media/sd-ca/teme/schelet_cod_tema3.zip" class="media mediafile mf_zip" title="sd-ca:teme:schelet_cod_tema3.zip">schelet_cod_tema3.zip</a>
+</p><p></p><div class="noteclassic">Nu este obligatorie folosirea acestui schelet de cod.
+</div><p></p>
+<p></p>
+
+</div>
+
+<h1 class="sectionedit8" id="exemple">Exemple</h1>
+<div class="level1">
+<div class="table sectionedit9"><table class="inline">
+	<tbody><tr class="row0">
+		<th class="col0 leftalign"> Input1                         </th><th class="col1 leftalign"> Output1                 </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PUT google.com america google  </td><td class="col1 leftalign">                         </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PUT yahoo.com yahoo america    </td><td class="col1 leftalign">                         </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> GET america                    </td><td class="col1 centeralign">  google.com yahoo.com   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> SITE youtube.ro romania        </td><td class="col1 centeralign">  WORD_NOT_FOUND         </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> GET google america             </td><td class="col1 centeralign">  google.com             </td>
+	</tr>
+</tbody></table></div>
+<div class="table sectionedit10"><table class="inline">
+	<tbody><tr class="row0">
+		<th class="col0 leftalign"> Input2                         </th><th class="col1 leftalign"> Output2                 </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PUT google.com america google  </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PUT google.com sua     google  </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> PUT yahoo.com yahoo america    </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> PUT yahoo.com america america  </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> PUT yahoo.com romania franta   </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> PUT yahoo.com italia google    </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> PUT youtube.ro youtube romania </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> PUT yahoo.com yahoo america    </td><td class="col1 leftalign">                       </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> GET romania                    </td><td class="col1 leftalign"> yahoo.com youtube.ro  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> SITE youtube.ro romania        </td><td class="col1 leftalign"> WORD_FOUND            </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> GET google america             </td><td class="col1 leftalign"> google.com yahoo.com  </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> GET america                    </td><td class="col1 leftalign"> google.com yahoo.com  </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> GET italia franta yahoo        </td><td class="col1 leftalign"> yahoo.com             </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0 leftalign"> GET spania franta yahoo        </td><td class="col1 leftalign"> SITE_NOT_FOUND        </td>
+	</tr>
+	<tr class="row15">
+		<td class="col0 leftalign"> GET sua franta yahoo           </td><td class="col1 leftalign"> SITE_NOT_FOUND        </td>
+	</tr>
+</tbody></table></div>
+
+<p>
+</p><p></p><div class="noteimportant">Așa cum observați, pentru claritate răspunsul comenzilor GET/SITE a fost pus pe rândul corespunzător din tabel, lăsând câte o linie goală pentru fiecare comandă PUT, dar voi <strong>nu</strong> trebuie să lăsați nici o linie  goală. Pentru mai multe detalii, consultați checkerul disponibil.
+</div><p></p>
+<p></p>
+
+<p>
+</p><p></p><div class="noteimportant">Așa cum am amintit și în secțiunea corespunzătoare comenzii GET, site-urile sunt afișate în ordine alfabetică
+</div><p></p>
+<p></p>
+
+</div>
+
+<h1 class="sectionedit11" id="trimitere_si_punctare">Trimitere și punctare</h1>
+<div class="level1">
+
+</div>
+
+<h2 class="sectionedit12" id="reguli_pentru_trimitere">Reguli pentru trimitere</h2>
+<div class="level2">
+
+<p>
+Temele vor trebui trimise pe <a href="https://elf.cs.pub.ro/vmchecker/ui/#SD" class="urlextern" title="https://elf.cs.pub.ro/vmchecker/ui/#SD" rel="nofollow">vmchecker</a>. 
+<strong>Atenție!</strong> Temele trebuie trimise în secțiunea <strong>Structuri de Date (CA)</strong>.
+</p>
+
+<p>
+Arhiva trebuie să conțină:
+</p>
+<ul>
+<li class="level1"><div class="li"> surse</div>
+</li>
+<li class="level1"><div class="li"> fișier Makefile cu două reguli:</div>
+<ul>
+<li class="level2"><div class="li"> regula <strong>build</strong>: în urma căreia se generează un executabil numit <strong>tema3</strong></div>
+</li>
+<li class="level2"><div class="li"> regula <strong>clean</strong> care şterge executabilul</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> fisier <strong>README</strong> care să conțină detalii despre implementarea temei</div>
+</li>
+</ul>
+
+</div>
+
+<h2 class="sectionedit13" id="punctaj">Punctaj</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> 90 puncte obținute pe testele de pe vmchecker</div>
+<ul>
+<li class="level3"><div class="li"> Test1: Test SIMPLE GET</div>
+</li>
+<li class="level3"><div class="li"> Test2: Test SIMPLE GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test3: Test MEDIUM GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test4: Test MEDIUM GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test5: Test HARD GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test6: Test HARD GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test7: Test HARD GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test8: Test VERY HARD GET/SITE</div>
+</li>
+<li class="level3"><div class="li"> Test9: Test Valgrind, verifică dacă eliberați toată memoria</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> 10 puncte: coding style și README</div>
+</li>
+<li class="level1"><div class="li"> TOTAL: 100 puncte</div>
+</li>
+<li class="level1"><div class="li"> Timpul de rulare/test: Există un timp de rulare specific/test, astfel încât să fie verificat că implementați bine operațiile hashtable.</div>
+</li>
+</ul>
+
+<p>
+Coding style-ul trebuie să fie consistent și ușor de citit.
+</p>
+
+<p>
+<strong>Atenție!</strong> Tema valorează 1 punct din nota finală. 
+Citiți cu atenție <a href="http://ocw.cs.pub.ro/courses/sd-ca/regulament#reguli_de_trimitere_a_temelor" class="urlextern" title="http://ocw.cs.pub.ro/courses/sd-ca/regulament#reguli_de_trimitere_a_temelor" rel="nofollow">Regulamentul General de Trimitere a Temelor</a>.
+</p>
+
+<p>
+O temă copiată va atrage eliminarea punctajului <strong>pe toate temele</strong>.
+</p>
+
+</div>
+
+<h2 class="sectionedit14" id="checker">Checker</h2>
+<div class="level2">
+
+<p>
+</p><p></p><div class="noteimportant">
+<p></p>
+<ul>
+<li class="level1"><div class="li"> Puteți descărca checker-ul de aici: <a href="http://ocw.cs.pub.ro/courses/_media/sd-ca/teme/tema3-checker.zip" class="media mediafile mf_zip" title="sd-ca:teme:tema3-checker.zip">tema3-checker.zip</a></div>
+</li>
+</ul>
+
+<p>
+
+</p></div><p></p>
+<p></p>
+
+</div>
+
+<h2 class="sectionedit15" id="faq">FAQ</h2>
+<div class="level2">
+
+<p>
+<strong>Q:</strong> Se poate folosi STL?
+</p>
+
+<p>
+<strong>R:</strong> Puteți folosi <strong>doar</strong> clasa <strong>std::string</strong> pentru a reține stringurile, așa cum vedeți în scheletul de cod.
+</p>
+
+</div>
+
+<h1 class="sectionedit16" id="resurse">Resurse</h1>
+<div class="level1">
+
+<p>
+<a href="http://www.learncpp.com/" class="urlextern" title="http://www.learncpp.com/" rel="nofollow">C++ Tutorial</a>
+</p>
+
+</div>
+
+        </div>
+        <div class="right_sidebar">
+          <form action="http://ocw.cs.pub.ro/courses/start" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no"><input type="hidden" name="do" value="search"><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]"><input type="submit" value="Search" class="button" title="Search"><div id="qsearch__out" class="ajax_qsearch JSpopup" style="display: none;"></div></div></form>          <div class="namespace_sidebar sidebar_box">
+<ul>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/regulament" class="wikilink1" title="sd-ca:regulament">Reguli generale și de notare</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/catalog" class="wikilink1" title="sd-ca:catalog">Catalog</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/concursuri" class="wikilink1" title="sd-ca:concursuri">Concursuri</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/calendar" class="wikilink1" title="sd-ca:calendar">Calendar</a></div>
+</li>
+</ul>
+
+<h1 class="sectionedit17" id="cursuri">Cursuri</h1>
+<div class="level1">
+
+<div><div id="nojs_indexmenu_1398391827526d05c66f391" data-jsajax="" class="indexmenu_nojs">
+
+<ul class="idx">
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/cursuri/curs01" class="wikilink1" title="sd-ca:cursuri:curs01">Curs 01 - C++ Programming</a></div></li>
+</ul>
+</div></div>
+
+</div>
+<!-- EDIT17 SECTION "Cursuri" [234-288] -->
+<h1 class="sectionedit18" id="laboratoare">Laboratoare</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-01" class="wikilink1" title="sd-ca:laboratoare:laborator-01">Laborator 1 - Introducere in C++</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-02" class="wikilink1" title="sd-ca:laboratoare:laborator-02">Laborator 2 - Noțiuni de C++ și Sortare</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-03" class="wikilink1" title="sd-ca:laboratoare:laborator-03">Laborator 3 - Stive</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-04" class="wikilink1" title="sd-ca:laboratoare:laborator-04">Laborator 4 - Cozi</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-05" class="wikilink1" title="sd-ca:laboratoare:laborator-05">Laborator 5 - Liste generice</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-06" class="wikilink1" title="sd-ca:laboratoare:laborator-06">Laborator 6 - HashTable</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-07" class="wikilink1" title="sd-ca:laboratoare:laborator-07">Laborator 7 - Grafuri</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-08" class="wikilink1" title="sd-ca:laboratoare:laborator-08">Laborator 8 - Arbori Binari</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-09" class="wikilink1" title="sd-ca:laboratoare:laborator-09">Laborator 9 - Arbori Binari de Căutare</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-10" class="wikilink1" title="sd-ca:laboratoare:laborator-10">Laborator 10 - Heap-uri</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-11" class="wikilink1" title="sd-ca:laboratoare:laborator-11">Laborator 11 - Treap-uri</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/laboratoare/laborator-12" class="wikilink1" title="sd-ca:laboratoare:laborator-12">Laborator 12 - Mulțimi Disjuncte</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT18 SECTION "Laboratoare" [289-1209] -->
+<h1 class="sectionedit19" id="teme">Teme</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-01" class="wikilink1" title="sd-ca:teme:teme-01">Tema 1</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-02" class="wikilink1" title="sd-ca:teme:teme-02">Tema 2</a></div>
+</li>
+<li class="level1"><div class="li"> <span class="curid"><a href="./Tema 3 - Inverted Index [CS Open CourseWare]_files/Tema 3 - Inverted Index [CS Open CourseWare].html" class="wikilink1" title="sd-ca:teme:teme-03">Tema 3</a></span></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-04" class="wikilink1" title="sd-ca:teme:teme-04">Tema 4</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT19 SECTION "Teme" [1210-1365] -->
+<h1 class="sectionedit20" id="resurse">Resurse</h1>
+<div class="level1">
+
+<div><div id="nojs_indexmenu_1742973855526d05c6704ec" data-jsajax="" class="indexmenu_nojs">
+
+<ul class="idx">
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/resurse/debugging" class="wikilink1" title="sd-ca:resurse:debugging">Debugging</a></div></li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/resurse/visualization" class="wikilink1" title="sd-ca:resurse:visualization">Data Structure Visualization</a></div></li>
+</ul>
+</div></div>
+
+</div>
+<!-- EDIT20 SECTION "Resurse" [1366-] -->
+</div>
+<div class="toc_sidebar sidebar_box">
+<!-- TOC START -->
+<div id="sb__right__dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#tema_3_-_inverted_index">Tema 3 - Inverted Index</a></div></li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#introducere">Introducere</a></div></li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#cerinte">Cerințe</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#detalii_de_implementare">Detalii de implementare</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#input">Input</a></div>
+<ul class="toc">
+<li class="level4"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#comanda_put">Comanda PUT</a></div></li>
+<li class="level4"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#comanda_get">Comanda GET</a></div></li>
+<li class="level4"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#comanda_site">Comanda SITE</a></div></li>
+<li class="level4"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#observatii_generale_input">Observații generale INPUT</a></div></li>
+</ul>
+</li>
+<li class="level3"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#hashtable">Hashtable</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#schelet_de_cod">Schelet de Cod</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#exemple">Exemple</a></div></li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#trimitere_si_punctare">Trimitere și punctare</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#reguli_pentru_trimitere">Reguli pentru trimitere</a></div></li>
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#punctaj">Punctaj</a></div></li>
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#checker">Checker</a></div></li>
+<li class="level2"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#faq">FAQ</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#resurse">Resurse</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+</div>
+        </div>
+      
+    
+      <div class="stylefoot">
+        <div class="meta">
+          <div class="user">
+                    </div>
+          <div class="doc">
+          sd-ca/teme/teme-03.txt · Last modified: 2013/05/03 23:08 by octavian.rinciog          </div>
+        </div>
+      </div>
+
+    <div class="clearer"></div>
+
+    
+                <div class="bar" id="bar__bottom">
+      <div class="bar-left">
+        <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03?do=revisions" class="action revs" accesskey="o" rel="nofollow" title="Old revisions [O]">Old revisions</a>      </div>
+      <div class="bar-right">
+        <a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03?do=media" class="action media" rel="nofollow" title="Media Manager">Media Manager</a><a href="http://ocw.cs.pub.ro/courses/sd-ca/teme/teme-03#dokuwiki__top" class="action top" accesskey="t" rel="nofollow" title="Back to top [T]">Back to top</a>      </div>
+    </div>
+    <div class="clearer"></div>
+            
+    <div align="center" class="footerinc">
+  <div class="license"><a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/cc-by-sa.png" alt="CC Attribution-Share Alike 3.0 Unported"></a></div>
+  <a target="_blank" href="http://www.chimeric.de/" title="www.chimeric.de"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-chimeric-de.png" width="80" height="15" alt="www.chimeric.de" border="0"></a>
+
+  <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-css.png" width="80" height="15" alt="Valid CSS" border="0"></a>
+
+  <a target="_blank" href="http://wiki.splitbrain.org/wiki:dokuwiki" title="Driven by DokuWiki"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-dw.png" width="80" height="15" alt="Driven by DokuWiki" border="0"></a>
+
+  <a target="_blank" href="http://www.firefox-browser.de/" title="do yourself a favour and use a real browser - get firefox"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-firefox.png" width="80" height="15" alt="do yourself a favour and use a real browser - get firefox!!" border="0"></a>
+  
+  <a target="_blank" href="http://ocw.cs.pub.ro/courses/feed.php" title="Recent changes RSS feed"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-rss.png" width="80" height="15" alt="Recent changes RSS feed" border="0"></a>
+
+  <a target="_blank" href="http://validator.w3.org/check/referer" title="Valid XHTML 1.0"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/button-xhtml.png" width="80" height="15" alt="Valid XHTML 1.0" border="0"></a>
+</div>
+
+  </div>
+</div>
+
+<div class="no"><img src="./Tema 3 - Inverted Index [CS Open CourseWare]_files/indexer.php" width="2" height="1" alt=""></div>
+
+
+</body></html>
